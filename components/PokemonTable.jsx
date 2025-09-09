@@ -1,9 +1,10 @@
 
 import PokemonRow from "./PokemonRow";
-import store from "../src/store";
-import { observer } from "mobx-react";
+import { useContext } from "react";
+import { observer, MobXProviderContext } from "mobx-react";
 
-const PokemonTable = () => {
+const PokemonTable = observer(() => {
+  const { store } = useContext(MobXProviderContext);
   return (
     <table width="100%" suppressHydrationWarning>
       <tbody>
@@ -15,6 +16,6 @@ const PokemonTable = () => {
       </tbody>
     </table>
   );
-};
+});
 
-export default observer(PokemonTable);
+export default PokemonTable;

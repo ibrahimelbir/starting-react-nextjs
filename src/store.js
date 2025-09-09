@@ -4,7 +4,12 @@ class Store {
   pokemon = [];
   filter = "";
   selectedPokemon = null;
-  constructor() {
+
+  constructor(initialData = {}) {
+    this.pokemon = initialData.pokemon || [];
+    this.filter = initialData.filter || "";
+    this.selectedPokemon = initialData.selectedPokemon || null;
+
     makeObservable(this, {
       pokemon: observable,
       filter: observable,
@@ -12,8 +17,11 @@ class Store {
       filteredPokemon: computed,
     });
   }
+
   get filteredPokemon() {
-    return this.pokemon.filter(({ name: { english } }) => english.toLocaleLowerCase().includes(store.filter.toLocaleLowerCase()));
+    return this.pokemon.filter(({ name: { english } }) =>
+      english.toLocaleLowerCase().includes(this.filter.toLocaleLowerCase())
+    );
   }
 
   setPokemon(pokemon) {
@@ -29,13 +37,6 @@ class Store {
   }
 }
 
-const store = new Store();
+export const createStore = (initialData) => new Store(initialData);
 
-if (typeof window !== "undefined"){
-
-  fetch("/pokemon.json")
-    .then((resp) => resp.json())
-    .then((pokemon) => store.setPokemon(pokemon));
-}
-
-export default store;
+export default createStore();

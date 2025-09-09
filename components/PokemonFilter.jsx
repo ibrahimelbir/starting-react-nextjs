@@ -1,7 +1,7 @@
 
 import styled from "@emotion/styled";
-import store from "../src/store";
-import { observer } from "mobx-react";
+import { useContext } from "react";
+import { observer, MobXProviderContext } from "mobx-react";
 
 
 const Input = styled.input`
@@ -10,7 +10,8 @@ const Input = styled.input`
   font-size: large;
 `;
 
-const PokemonFilter = () => {
+const PokemonFilter = observer(() => {
+  const { store } = useContext(MobXProviderContext);
 
   return (
     <Input
@@ -20,6 +21,6 @@ const PokemonFilter = () => {
       placeholder="Search Pokémon..."
     />
   );
-};
+});
 
-export default observer(PokemonFilter);
+export default PokemonFilter;
