@@ -1,12 +1,11 @@
 import { makeObservable, observable, computed } from "mobx";
 
 class Store {
-  pokemon = [];
+  pokemon = require('../src/pokemon.json');
   filter = "";
   selectedPokemon = null;
 
   constructor(initialData = {}) {
-    this.pokemon = initialData.pokemon || [];
     this.filter = initialData.filter || "";
     this.selectedPokemon = initialData.selectedPokemon || null;
 
@@ -37,6 +36,4 @@ class Store {
   }
 }
 
-export const createStore = (initialData) => new Store(initialData);
-
-export default createStore();
+export default Store;

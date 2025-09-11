@@ -11,9 +11,7 @@ const PageContainer = styled.div`
 `;
 
 const Pokemon = withRouter(
-  observer(({ router }) => {
-    const { store } = useContext(MobXProviderContext);
-    const pokemon = store.pokemon.find((p) => p.id.toString() === router.query.id);
+  observer(({ pokemon }) => {
     return (
       <PageContainer>
         <CssBaseline />
@@ -23,8 +21,12 @@ const Pokemon = withRouter(
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell><b>Attribute</b></TableCell>
-                  <TableCell><b>Value</b></TableCell>
+                  <TableCell>
+                    <b>Attribute</b>
+                  </TableCell>
+                  <TableCell>
+                    <b>Value</b>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -42,5 +44,30 @@ const Pokemon = withRouter(
     );
   })
 );
+
+export async function getStaticPaths() {
+  const allPokemon = await require("../../src/pokemon.json");
+  return {
+    paths: allPokemon.map((p) => ({
+      params: {
+        id: p.id.toString(),
+      }
+    })),
+    fallback: false
+  };
+}
+
+export async function getStaticProps({ params }) {
+  try {
+    const allPokemon = await require("../../src/pokemon.json");
+
+    const pokemon = allPokemon.find((p) => p.id.toString() === params.id);
+
+    return { props: { pokemon: pokemon || null } };
+  } catch (error) {
+    console.error("Error: ", error);
+    return { props: { pokemon: null } };
+  }
+}
 
 export default Pokemon;

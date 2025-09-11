@@ -1,9 +1,11 @@
-import { useEffect } from "react";
 import styled from "@emotion/styled";
 import { CssBaseline } from "@mui/material";
 import PokemonInfo from "../components/PokemonInfo";
 import PokemonFilter from "../components/PokemonFilter";
 import PokemonTable from "../components/PokemonTable";
+import  Store  from "../src/store";
+import { Provider } from "mobx-react";
+
 
 
 const Title = styled.h1`
@@ -22,9 +24,11 @@ const TwoColumnLayout = styled.div`
   grid-column-gap: 1rem;
 `;
 
-const Home = ({ initialPokemon }) => {
 
+const Home = () => {
+  const store = new Store();
   return (
+    <Provider store={store}>
       <PageContainer>
         <CssBaseline />
         <Title>Pokemon Search</Title>
@@ -36,19 +40,9 @@ const Home = ({ initialPokemon }) => {
           <PokemonInfo />
         </TwoColumnLayout>
       </PageContainer>
+    </Provider>
   );
 };
 
-export async function getServerSideProps() {
-  try {
-    const res = await fetch("http://localhost:3000/pokemon.json");
-    if (!res.ok) throw new Error("Failed to fetch pokemon");
-    const pokemon = await res.json();
-    return { props: { initialPokemon: pokemon } };
-  } catch (error) {
-    console.error("SSR fetch error:", error);
-    return { props: { initialPokemon: [] } };
-  }
-}
 
 export default Home;
