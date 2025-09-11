@@ -1,16 +1,21 @@
 self.__BUILD_MANIFEST = {
   "/": [
-    "./static/chunks/7b5417191c6623cd.js"
+    "./static/chunks/b5f71c86ca3135a5.js"
   ],
   "/_error": [
-    "./static/chunks/48e24f891b5cc19d.js"
+    "./static/chunks/9ef16495c43114c2.js"
   ],
   "/pokemon/[id]": [
-    "./static/chunks/787f0cc6ea207f64.js"
+    "./static/chunks/d87b3320864d059a.js"
   ],
   "__rewrites": {
     "afterFiles": [],
-    "beforeFiles": [],
+    "beforeFiles": [
+      {
+        "source": "/starting-react-nextjs//_next/:path+",
+        "destination": "/starting-react-nextjs/_next/:path+"
+      }
+    ],
     "fallback": []
   },
   "sortedPages": [
